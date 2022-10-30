@@ -107,6 +107,6 @@ func main() {
 	router.HandleFunc("/elections/{id}", getElectionById).Methods("GET")
 	router.HandleFunc("/elections/{id}", deleteElection).Methods("DELETE")
 	router.HandleFunc("/elections", createElection).Methods("POST")
-	log.Fatal(http.ListenAndServe(":80", router))
+	log.Fatal(http.ListenAndServe(":5000", router))
 
 }
