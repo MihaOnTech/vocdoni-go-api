@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gorilla/mux"
@@ -99,6 +100,11 @@ func indexRoute(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 	fmt.Println("Starting API...")
 	router := mux.NewRouter().StrictSlash(true)
 
@@ -107,6 +113,7 @@ func main() {
 	router.HandleFunc("/elections/{id}", getElectionById).Methods("GET")
 	router.HandleFunc("/elections/{id}", deleteElection).Methods("DELETE")
 	router.HandleFunc("/elections", createElection).Methods("POST")
-	log.Fatal(http.ListenAndServe(":5000", router))
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 
 }
